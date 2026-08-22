@@ -1,0 +1,180 @@
+@import 'tailwindcss';
+
+:root {
+  --paper: #f4f0e7;
+  --surface: #ebe4d7;
+  --ink: #20241f;
+  --muted: #687067;
+  --line: #cec6b7;
+  --accent: #d7ff57;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--ink);
+}
+
+@layer components {
+  .eyebrow {
+    font-family: var(--font-geist-mono), monospace;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .prose-blog {
+    color: var(--ink);
+    font-size: 1.0625rem;
+    line-height: 1.85;
+  }
+
+  .prose-blog > * + * {
+    margin-top: 1.5rem;
+  }
+
+  .prose-blog h2,
+  .prose-blog h3 {
+    margin-top: 3rem;
+    font-weight: 650;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+  }
+
+  .prose-blog h2 {
+    font-size: 2rem;
+  }
+
+  .prose-blog h3 {
+    font-size: 1.5rem;
+  }
+
+  .prose-blog a {
+    text-decoration: underline;
+    text-decoration-color: var(--line);
+    text-underline-offset: 0.2em;
+  }
+
+  .prose-blog blockquote {
+    border-left: 3px solid var(--ink);
+    color: var(--muted);
+    font-size: 1.2rem;
+    font-style: italic;
+    padding-left: 1.5rem;
+  }
+
+  .prose-blog ul,
+  .prose-blog ol {
+    padding-left: 1.5rem;
+  }
+
+  .prose-blog ul {
+    list-style: disc;
+  }
+
+  .prose-blog ol {
+    list-style: decimal;
+  }
+
+  .prose-blog code {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    font-family: var(--font-geist-mono), monospace;
+    font-size: 0.9em;
+    padding: 0.1em 0.35em;
+  }
+
+  .prose-blog pre {
+    overflow-x: auto;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 1.25rem;
+  }
+
+  .prose-blog pre code {
+    background: transparent;
+    border: 0;
+    padding: 0;
+  }
+
+  .admin-panel {
+    border: 1px solid #e4e4e7;
+    border-radius: 0.75rem;
+    background: white;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 3%);
+  }
+
+  .admin-label {
+    color: #3f3f46;
+    font-size: 0.75rem;
+    font-weight: 650;
+    letter-spacing: 0.02em;
+  }
+
+  .admin-input {
+    display: block;
+    width: 100%;
+    border: 1px solid #d4d4d8;
+    border-radius: 0.5rem;
+    background: white;
+    padding: 0.625rem 0.75rem;
+    color: #18181b;
+    font-size: 0.875rem;
+    outline: none;
+  }
+
+  .admin-input:focus {
+    border-color: #18181b;
+    box-shadow: 0 0 0 2px rgb(24 24 27 / 10%);
+  }
+
+  .admin-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    background: #18181b;
+    padding: 0.625rem 1rem;
+    color: white;
+    font-size: 0.875rem;
+    font-weight: 650;
+    transition: background 150ms ease;
+  }
+
+  .admin-button:hover {
+    background: #3f3f46;
+  }
+
+  .admin-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+}
