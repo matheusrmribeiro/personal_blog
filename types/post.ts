@@ -15,4 +15,5 @@ export type PostSummary = Pick<
   | 'published_at'
   | 'seo_title'
   | 'seo_description'
+  | 'view_count'
 >;

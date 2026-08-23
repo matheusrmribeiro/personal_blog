@@ -2,11 +2,8 @@
 
 import { useActionState, useState } from 'react';
 import { useFormStatus } from 'react-dom';
-import {
-  savePost,
-  type PostActionState,
-} from '@/app/admin/actions';
-import { MarkdownContent } from '@/components/blog/markdown-content';
+import { savePost, type PostActionState } from '@/app/admin/actions';
+import { RichTextEditor } from '@/components/admin/rich-text-editor';
 import type { Post } from '@/types/post';
 
 const initialState: PostActionState = { message: '' };
@@ -17,7 +14,8 @@ export function PostEditor({ post }: { post?: Post }) {
   const [slug, setSlug] = useState(post?.slug ?? '');
   const [slugEdited, setSlugEdited] = useState(Boolean(post));
   const [content, setContent] = useState(post?.content ?? '');
-  const [mode, setMode] = useState<'write' | 'preview'>('write');
+  const [isEditorBusy, setIsEditorBusy] = useState(false);
+  const [imageError, setImageError] = useState('');
 
   function updateTitle(value: string) {
     setTitle(value);
@@ -28,7 +26,7 @@ export function PostEditor({ post }: { post?: Post }) {
   }
 
   return (
-    <form action={formAction} encType="multipart/form-data">
+    <form action={formAction}>
       <input name="id" type="hidden" value={post?.id ?? ''} />
 
       <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_320px]">
@@ -88,45 +86,24 @@ export function PostEditor({ post }: { post?: Post }) {
           </section>
 
           <section className="admin-panel overflow-hidden">
-            <div className="flex items-center justify-between border-b border-zinc-200 px-5 py-3">
+            <div className="border-b border-zinc-200 px-5 py-3">
               <p className="admin-label">Post content</p>
-              <div className="flex rounded-lg bg-zinc-100 p-1 text-xs font-semibold">
-                <button
-                  type="button"
-                  onClick={() => setMode('write')}
-                  className={`rounded-md px-3 py-1.5 ${mode === 'write' ? 'bg-white shadow-sm' : 'text-zinc-500'}`}
-                >
-                  Write
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setMode('preview')}
-                  className={`rounded-md px-3 py-1.5 ${mode === 'preview' ? 'bg-white shadow-sm' : 'text-zinc-500'}`}
-                >
-                  Preview
-                </button>
-              </div>
             </div>
-            {mode === 'write' ? (
-              <textarea
-                className="min-h-[560px] w-full resize-y bg-white p-6 font-mono text-sm leading-7 outline-none sm:p-8"
-                name="content"
-                value={content}
-                onChange={(event) => setContent(event.target.value)}
-                placeholder={'Start writing in Markdown…\n\n## A useful heading\n\nYour story begins here.'}
-              />
-            ) : (
-              <div className="min-h-[560px] bg-white p-6 sm:p-8">
-                {content.trim() ? (
-                  <MarkdownContent content={content} />
-                ) : (
-                  <p className="text-sm text-zinc-400">
-                    Write something to see the preview.
-                  </p>
-                )}
-                <input name="content" type="hidden" value={content} />
-              </div>
-            )}
+            <RichTextEditor
+              initialContent={post?.content ?? ''}
+              onChange={setContent}
+              onBusyChange={setIsEditorBusy}
+              onError={setImageError}
+            />
+            <input name="content" type="hidden" value={content} />
+            {imageError ? (
+              <p
+                className="border-t border-red-100 bg-red-50 px-6 py-3 text-sm text-red-700"
+                role="alert"
+              >
+                {imageError}
+              </p>
+            ) : null}
             {state.errors?.content?.[0] ? (
               <p className="border-t border-red-100 bg-red-50 px-6 py-3 text-sm text-red-700">
                 {state.errors.content[0]}
@@ -149,7 +126,7 @@ export function PostEditor({ post }: { post?: Post }) {
                 {state.message}
               </p>
             ) : null}
-            <PublishButtons />
+            <PublishButtons disabled={isEditorBusy} />
           </section>
 
           <section className="admin-panel space-y-5 p-6">
@@ -232,8 +209,9 @@ function Field({
   );
 }
 
-function PublishButtons() {
+function PublishButtons({ disabled }: { disabled: boolean }) {
   const { pending } = useFormStatus();
+  const isDisabled = pending || disabled;
 
   return (
     <div className="mt-5 grid gap-2">
@@ -242,7 +220,7 @@ function PublishButtons() {
         type="submit"
         name="intent"
         value="publish"
-        disabled={pending}
+        disabled={isDisabled}
       >
         {pending ? 'Saving…' : 'Publish now'}
       </button>
@@ -251,7 +229,7 @@ function PublishButtons() {
         type="submit"
         name="intent"
         value="draft"
-        disabled={pending}
+        disabled={isDisabled}
       >
         Save draft
       </button>

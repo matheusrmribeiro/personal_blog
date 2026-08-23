@@ -28,7 +28,7 @@ export default async function AdminLoginPage({
             &#8592; Back to the blog
           </Link>
           <p className="mt-16 font-mono text-xs uppercase tracking-[0.18em] text-lime-300">
-            The Workbench Studio
+            Workbench Notes Studio
           </p>
           <h1 className="mt-4 text-4xl font-semibold tracking-[-0.035em]">
             Welcome back.

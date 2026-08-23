@@ -54,6 +54,32 @@ export type Database = {
         }
         Relationships: []
       }
+      post_view_sessions: {
+        Row: {
+          last_viewed_at: string
+          post_id: string
+          visitor_hash: string
+        }
+        Insert: {
+          last_viewed_at?: string
+          post_id: string
+          visitor_hash: string
+        }
+        Update: {
+          last_viewed_at?: string
+          post_id?: string
+          visitor_hash?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "post_view_sessions_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       posts: {
         Row: {
           author_id: string | null
@@ -69,6 +95,7 @@ export type Database = {
           status: string
           title: string
           updated_at: string
+          view_count: number
         }
         Insert: {
           author_id?: string | null
@@ -84,6 +111,7 @@ export type Database = {
           status?: string
           title: string
           updated_at?: string
+          view_count?: number
         }
         Update: {
           author_id?: string | null
@@ -99,6 +127,7 @@ export type Database = {
           status?: string
           title?: string
           updated_at?: string
+          view_count?: number
         }
         Relationships: []
       }
@@ -108,6 +137,10 @@ export type Database = {
     }
     Functions: {
       is_admin: { Args: never; Returns: boolean }
+      record_post_view: {
+        Args: { p_post_slug: string; p_visitor_hash: string }
+        Returns: number
+      }
     }
     Enums: {
       [_ in never]: never

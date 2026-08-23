@@ -17,13 +17,13 @@ export const metadata: Metadata = {
     process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000',
   ),
   title: {
-    default: 'The Workbench',
-    template: '%s | The Workbench',
+    default: 'Workbench Notes',
+    template: '%s | Workbench Notes',
   },
   description:
     'A personal journal about software, design, and building thoughtful digital products.',
   openGraph: {
-    title: 'The Workbench',
+    title: 'Workbench Notes',
     description:
       'Ideas, experiments, and lessons from the workbench.',
     images: [{ url: '/og.png', width: 1200, height: 630 }],
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'The Workbench',
+    title: 'Workbench Notes',
     description: 'Ideas, experiments, and lessons from the workbench.',
     images: ['/og.png'],
   },

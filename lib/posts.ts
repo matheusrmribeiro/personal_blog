@@ -4,7 +4,7 @@ import { createPublicClient } from '@/lib/supabase/public';
 import type { Post, PostSummary } from '@/types/post';
 
 const publicPostFields =
-  'id,title,slug,excerpt,content,cover_image_url,published_at,seo_title,seo_description' as const;
+  'id,title,slug,excerpt,content,cover_image_url,published_at,seo_title,seo_description,view_count' as const;
 
 export const getPublishedPosts = cache(
   async (limit?: number): Promise<PostSummary[]> => {

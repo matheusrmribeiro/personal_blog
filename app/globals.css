@@ -91,6 +91,27 @@ body {
     padding-left: 1.5rem;
   }
 
+  .prose-blog img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    margin: 2rem auto;
+    border-radius: 0.5rem;
+  }
+
+  .prose-blog img[src$='#size=small'] {
+    width: 40%;
+  }
+
+  .prose-blog img[src$='#size=medium'] {
+    width: 70%;
+  }
+
+  .prose-blog img[src$='#size=large'] {
+    width: 100%;
+  }
+
   .prose-blog ul,
   .prose-blog ol {
     padding-left: 1.5rem;
@@ -114,6 +135,7 @@ body {
 
   .prose-blog pre {
     overflow-x: auto;
+    border-radius: 0.5rem;
     background: var(--ink);
     color: var(--paper);
     padding: 1.25rem;
@@ -176,5 +198,38 @@ body {
   .admin-button:disabled {
     cursor: not-allowed;
     opacity: 0.55;
+  }
+
+  .rich-text-editor {
+    min-height: 35rem;
+    padding: 2rem;
+    outline: none;
+  }
+
+  .rich-text-editor:focus {
+    box-shadow: inset 0 0 0 2px rgb(24 24 27 / 8%);
+  }
+
+  .rich-text-editor p.is-editor-empty:first-child::before {
+    float: left;
+    height: 0;
+    color: #a1a1aa;
+    content: attr(data-placeholder);
+    pointer-events: none;
+  }
+
+  .rich-text-editor img {
+    cursor: pointer;
+  }
+
+  .rich-text-editor img.ProseMirror-selectednode {
+    outline: 3px solid #18181b;
+    outline-offset: 4px;
+  }
+}
+
+@media (max-width: 640px) {
+  .rich-text-editor {
+    padding: 1.5rem;
   }
 }

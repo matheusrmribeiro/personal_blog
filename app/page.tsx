@@ -51,14 +51,14 @@ export default async function Home() {
 
         {morePosts.length ? (
           <section
-            id="writing"
+            id="notes"
             className="mx-auto max-w-6xl scroll-mt-8 px-6 py-16 md:px-10 md:py-24"
           >
             <div className="mb-10 flex items-end justify-between gap-6 border-b border-line pb-5">
               <div>
                 <p className="eyebrow">From the notebook</p>
                 <h2 className="mt-2 text-3xl font-semibold tracking-tight text-ink">
-                  Recent writing
+                  Recent notes
                 </h2>
               </div>
               <Link

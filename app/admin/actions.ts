@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 import { requireAdmin } from '@/lib/auth/admin';
+import { getSupabaseConfig } from '@/lib/supabase/config';
 import { createClient } from '@/lib/supabase/server';
 
 const postSchema = z.object({
@@ -36,12 +37,121 @@ export type PostActionState = {
   errors?: Record<string, string[]>;
 };
 
+export type PostImageActionResult =
+  | { success: true; url: string }
+  | { success: false; error: string };
+
+export type DeletePostImageActionResult =
+  | { success: true }
+  | { success: false; error: string };
+
 const allowedImageTypes = new Set([
   'image/gif',
   'image/jpeg',
   'image/png',
   'image/webp',
 ]);
+
+const extensionByType: Record<string, string> = {
+  'image/gif': 'gif',
+  'image/jpeg': 'jpg',
+  'image/png': 'png',
+  'image/webp': 'webp',
+};
+
+const maxImageSize = 5 * 1024 * 1024;
+
+export async function uploadPostContentImage(
+  formData: FormData,
+): Promise<PostImageActionResult> {
+  const { supabase, user } = await requireAdmin();
+  const image = formData.get('image');
+
+  if (!(image instanceof File) || image.size === 0) {
+    return { success: false, error: 'Choose an image to upload.' };
+  }
+
+  if (!allowedImageTypes.has(image.type)) {
+    return {
+      success: false,
+      error: 'Choose a JPG, PNG, WebP, or GIF image.',
+    };
+  }
+
+  if (image.size > maxImageSize) {
+    return {
+      success: false,
+      error: 'Images must be smaller than 5 MB.',
+    };
+  }
+
+  const imagePath = `${user.id}/content/${crypto.randomUUID()}.${extensionByType[image.type]}`;
+  const { error } = await supabase.storage
+    .from('post-images')
+    .upload(imagePath, image, {
+      cacheControl: '31536000',
+      contentType: image.type,
+      upsert: false,
+    });
+
+  if (error) {
+    return {
+      success: false,
+      error: `Unable to upload the image: ${error.message}`,
+    };
+  }
+
+  const url = supabase.storage
+    .from('post-images')
+    .getPublicUrl(imagePath).data.publicUrl;
+
+  return { success: true, url };
+}
+
+export async function deletePostContentImage(
+  formData: FormData,
+): Promise<DeletePostImageActionResult> {
+  const { supabase } = await requireAdmin();
+  const parsedUrl = z.string().url().safeParse(formData.get('url'));
+
+  if (!parsedUrl.success) {
+    return { success: false, error: 'The image URL is invalid.' };
+  }
+
+  const publicPathPrefix = '/storage/v1/object/public/post-images/';
+  const { supabaseUrl } = getSupabaseConfig();
+  const imageUrl = new URL(parsedUrl.data);
+
+  if (
+    imageUrl.origin !== new URL(supabaseUrl).origin ||
+    !imageUrl.pathname.startsWith(publicPathPrefix)
+  ) {
+    return { success: false, error: 'This image is not managed by this blog.' };
+  }
+
+  const imagePath = decodeURIComponent(
+    imageUrl.pathname.slice(publicPathPrefix.length),
+  );
+  const contentImagePath =
+    /^[0-9a-f-]{36}\/content\/[0-9a-f-]{36}\.(?:gif|jpg|png|webp)$/i;
+
+  if (!contentImagePath.test(imagePath)) {
+    return { success: false, error: 'This image cannot be deleted here.' };
+  }
+
+  const { error } = await supabase.storage
+    .from('post-images')
+    .remove([imagePath]);
+
+  if (error) {
+    return {
+      success: false,
+      error: `Unable to delete the image: ${error.message}`,
+    };
+  }
+
+  return { success: true };
+}
 
 export async function savePost(
   _previousState: PostActionState,
@@ -85,19 +195,13 @@ export async function savePost(
       };
     }
 
-    if (image.size > 5 * 1024 * 1024) {
+    if (image.size > maxImageSize) {
       return {
         message: 'The cover image must be smaller than 5 MB.',
         errors: { cover_image: ['Image is too large.'] },
       };
     }
 
-    const extensionByType: Record<string, string> = {
-      'image/gif': 'gif',
-      'image/jpeg': 'jpg',
-      'image/png': 'png',
-      'image/webp': 'webp',
-    };
     const imagePath = `${user.id}/${crypto.randomUUID()}.${extensionByType[image.type]}`;
     const { error: uploadError } = await supabase.storage
       .from('post-images')

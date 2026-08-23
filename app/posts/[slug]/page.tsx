@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { MarkdownContent } from '@/components/blog/markdown-content';
+import { PostViewCounter } from '@/components/blog/post-view-counter';
 import { SiteFooter } from '@/components/layout/site-footer';
 import { SiteHeader } from '@/components/layout/site-header';
 import {
@@ -63,7 +64,7 @@ export default async function PostPage({ params }: PostPageProps) {
               href="/posts"
               className="font-mono text-xs uppercase tracking-[0.16em] text-muted hover:text-ink"
             >
-              &#8592; All writing
+              &#8592; All notes
             </Link>
             <h1 className="mt-8 text-4xl font-semibold leading-[1.04] tracking-[-0.04em] sm:text-6xl">
               {post.title}
@@ -71,12 +72,17 @@ export default async function PostPage({ params }: PostPageProps) {
             <p className="mt-7 max-w-3xl text-xl leading-8 text-muted">
               {post.excerpt}
             </p>
-            <div className="mt-8 flex gap-3 font-mono text-xs uppercase tracking-[0.14em] text-muted">
+            <div className="mt-8 flex flex-wrap gap-x-3 gap-y-1 font-mono text-xs uppercase tracking-[0.14em] text-muted">
               <time dateTime={post.published_at ?? undefined}>
                 {formatPostDate(post.published_at)}
               </time>
               <span aria-hidden="true">/</span>
               <span>{estimateReadingTime(post.content)}</span>
+              <span aria-hidden="true">/</span>
+              <PostViewCounter
+                initialCount={post.view_count}
+                slug={post.slug}
+              />
             </div>
           </header>
 

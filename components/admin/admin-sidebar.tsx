@@ -6,7 +6,7 @@ export function AdminSidebar({ email }: { email: string }) {
     <aside className="border-b border-zinc-800 bg-zinc-950 text-zinc-100 lg:fixed lg:inset-y-0 lg:left-0 lg:w-64 lg:border-b-0 lg:border-r">
       <div className="flex min-h-20 items-center justify-between px-6 lg:block lg:min-h-0 lg:px-7 lg:py-8">
         <Link href="/admin" className="font-semibold tracking-tight">
-          The Workbench<span className="text-lime-300">.</span>
+          Workbench Notes<span className="text-lime-300">.</span>
         </Link>
         <span className="ml-3 rounded-full border border-zinc-700 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-zinc-400 lg:ml-0 lg:mt-3 lg:inline-block">
           Studio

@@ -1,10 +1,10 @@
-# Personal Blog
+# Workbench Notes
 
 A public personal blog and private publishing studio built with Next.js, TypeScript, Tailwind CSS 4, and Supabase.
 
 ## What is included
 
-- Public homepage, writing archive, individual Markdown post pages, and about page
+- Public homepage, notes archive, individual Markdown post pages, and about page
 - Passwordless admin sign-in through Supabase Auth
 - Admin dashboard with post counts and a complete post library
 - Markdown editor with live preview, drafts, publishing, SEO fields, and cover-image uploads
@@ -25,10 +25,13 @@ Set the project values in `.env.local`:
 ```dotenv
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your-publishable-key
+SUPABASE_SECRET_KEY=your-secret-key
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ```
 
-Never expose a Supabase secret or service-role key through a `NEXT_PUBLIC_` variable.
+Create the secret key in **Supabase Dashboard → Settings → API Keys**. It is used
+only by the server-side view counter. Never expose a Supabase secret or legacy
+service-role key through a `NEXT_PUBLIC_` variable.
 
 ## Database setup
 
@@ -43,6 +46,7 @@ supabase gen types typescript --linked > types/database.ts
 The migration creates:
 
 - `posts`, with draft and published states
+- Privacy-conscious post view counts with a 30-minute per-browser deduplication window
 - `admin_users`, an explicit administrator allowlist
 - Public-read and admin-write Row Level Security policies
 - A public `post-images` bucket with admin-only upload, update, and delete policies

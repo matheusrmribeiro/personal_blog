@@ -5,8 +5,8 @@ import { SiteHeader } from '@/components/layout/site-header';
 import { getPublishedPosts } from '@/lib/posts';
 
 export const metadata: Metadata = {
-  title: 'Writing',
-  description: 'All published notes from The Workbench.',
+  title: 'Notes',
+  description: 'All published notes from Workbench Notes.',
 };
 
 export const revalidate = 60;
@@ -21,7 +21,7 @@ export default async function PostsPage() {
         <div className="max-w-3xl">
           <p className="eyebrow">The archive</p>
           <h1 className="mt-5 text-5xl font-semibold tracking-[-0.04em] sm:text-6xl">
-            Writing
+            Notes
           </h1>
           <p className="mt-5 max-w-2xl text-lg leading-8 text-muted">
             Notes on software, design, creative practice, and building things
