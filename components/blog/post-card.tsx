@@ -16,16 +16,23 @@ export function PostCard({ post, featured = false, index }: PostCardProps) {
   if (featured) {
     const featuredVisual = (
       <div
-        className="flex min-h-72 items-end bg-ink bg-cover bg-center p-7 text-paper sm:min-h-96 sm:p-10"
+        className="relative flex min-h-72 items-end bg-ink p-7 text-paper sm:min-h-96 sm:p-10"
         style={
           post.cover_image_url
             ? {
-                backgroundImage: `linear-gradient(to top, rgb(32 36 31 / 82%), rgb(32 36 31 / 12%)), url("${post.cover_image_url}")`,
+                backgroundImage: `url("${post.cover_image_url}")`,
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'contain',
               }
             : undefined
         }
       >
-        <div>
+        <span
+          aria-hidden="true"
+          className="absolute inset-0 bg-linear-to-t from-ink/85 to-ink/10"
+        />
+        <div className="relative z-10">
           <span className="font-mono text-xs uppercase tracking-[0.2em] text-paper/55">
             Featured note
           </span>
