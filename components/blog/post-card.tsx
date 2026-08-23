@@ -3,6 +3,7 @@ import {
   estimateReadingTime,
   formatPostDate,
 } from '@/lib/posts';
+import { ExpandableImage } from '@/components/ui/expandable-image';
 import type { PostSummary } from '@/types/post';
 
 type PostCardProps = {
@@ -13,27 +14,41 @@ type PostCardProps = {
 
 export function PostCard({ post, featured = false, index }: PostCardProps) {
   if (featured) {
+    const featuredVisual = (
+      <div
+        className="flex min-h-72 items-end bg-ink bg-cover bg-center p-7 text-paper sm:min-h-96 sm:p-10"
+        style={
+          post.cover_image_url
+            ? {
+                backgroundImage: `linear-gradient(to top, rgb(32 36 31 / 82%), rgb(32 36 31 / 12%)), url("${post.cover_image_url}")`,
+              }
+            : undefined
+        }
+      >
+        <div>
+          <span className="font-mono text-xs uppercase tracking-[0.2em] text-paper/55">
+            Featured note
+          </span>
+          <p className="mt-3 max-w-xs text-sm leading-6 text-paper/75">
+            {post.excerpt}
+          </p>
+        </div>
+      </div>
+    );
+
     return (
       <article className="group grid gap-8 md:grid-cols-[0.8fr_1.2fr] md:items-end md:gap-14">
-        <div
-          className="flex min-h-72 items-end bg-ink bg-cover bg-center p-7 text-paper sm:min-h-96 sm:p-10"
-          style={
-            post.cover_image_url
-              ? {
-                  backgroundImage: `linear-gradient(to top, rgb(32 36 31 / 82%), rgb(32 36 31 / 12%)), url("${post.cover_image_url}")`,
-                }
-              : undefined
-          }
-        >
-          <div>
-            <span className="font-mono text-xs uppercase tracking-[0.2em] text-paper/55">
-              Featured note
-            </span>
-            <p className="mt-3 max-w-xs text-sm leading-6 text-paper/75">
-              {post.excerpt}
-            </p>
-          </div>
-        </div>
+        {post.cover_image_url ? (
+          <ExpandableImage
+            src={post.cover_image_url}
+            alt={`Cover image for ${post.title}`}
+            className="rounded-2xl"
+          >
+            {featuredVisual}
+          </ExpandableImage>
+        ) : (
+          <div className="overflow-hidden rounded-2xl">{featuredVisual}</div>
+        )}
         <div className="pb-2">
           <PostMeta post={post} />
           <h2 className="mt-5 text-4xl font-semibold leading-tight tracking-[-0.035em] sm:text-5xl">

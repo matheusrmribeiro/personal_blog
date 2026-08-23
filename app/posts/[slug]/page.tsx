@@ -5,6 +5,7 @@ import { MarkdownContent } from '@/components/blog/markdown-content';
 import { PostViewCounter } from '@/components/blog/post-view-counter';
 import { SiteFooter } from '@/components/layout/site-footer';
 import { SiteHeader } from '@/components/layout/site-header';
+import { ExpandableImage } from '@/components/ui/expandable-image';
 import {
   estimateReadingTime,
   formatPostDate,
@@ -87,12 +88,18 @@ export default async function PostPage({ params }: PostPageProps) {
           </header>
 
           {post.cover_image_url ? (
-            <div
-              className="mx-auto aspect-[16/8] max-w-6xl bg-ink bg-cover bg-center"
-              style={{ backgroundImage: `url("${post.cover_image_url}")` }}
-              role="img"
-              aria-label="Cover image"
-            />
+            <ExpandableImage
+              src={post.cover_image_url}
+              alt={`Cover image for ${post.title}`}
+              className="mx-auto aspect-[16/8] max-w-6xl rounded-2xl bg-ink"
+            >
+              <div
+                className="absolute inset-0 bg-cover bg-center"
+                style={{ backgroundImage: `url("${post.cover_image_url}")` }}
+                role="img"
+                aria-label={`Cover image for ${post.title}`}
+              />
+            </ExpandableImage>
           ) : null}
 
           <div className="mx-auto max-w-3xl px-6 py-14 md:px-10 md:py-20">

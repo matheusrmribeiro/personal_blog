@@ -97,7 +97,7 @@ body {
     max-width: 100%;
     height: auto;
     margin: 2rem auto;
-    border-radius: 0.5rem;
+    border-radius: 1rem;
   }
 
   .prose-blog img[src$='#size=small'] {

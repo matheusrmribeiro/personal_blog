@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import { SiteFooter } from '@/components/layout/site-footer';
 import { SiteHeader } from '@/components/layout/site-header';
+import { ExpandableImage } from '@/components/ui/expandable-image';
 import { getSupabaseConfig } from '@/lib/supabase/config';
 
 export const metadata: Metadata = {
@@ -19,7 +20,11 @@ export default function AboutPage() {
       <main className="mx-auto grid max-w-6xl gap-14 px-6 py-16 md:grid-cols-[0.7fr_1.3fr] md:px-10 md:py-24">
         <div>
           <p className="eyebrow">About this place</p>
-          <div className="relative mt-8 aspect-square max-w-sm overflow-hidden rounded-[8px] bg-ink">
+          <ExpandableImage
+            src={profileImageUrl}
+            alt="Portrait of the author by a mountain lake"
+            className="mt-8 aspect-square max-w-sm rounded-2xl bg-ink"
+          >
             <Image
               src={profileImageUrl}
               alt="Portrait of the author by a mountain lake"
@@ -28,7 +33,7 @@ export default function AboutPage() {
               sizes="(min-width: 768px) 24rem, calc(100vw - 3rem)"
               className="object-cover"
             />
-          </div>
+          </ExpandableImage>
         </div>
         <div className="max-w-2xl md:pt-14">
           <h1 className="text-5xl font-semibold tracking-[-0.04em] sm:text-6xl">
