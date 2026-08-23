@@ -3,6 +3,7 @@ import { PostCard } from '@/components/blog/post-card';
 import { SiteFooter } from '@/components/layout/site-footer';
 import { SiteHeader } from '@/components/layout/site-header';
 import { getPublishedPosts } from '@/lib/posts';
+import { RotatingHeadline } from './rotating-headline';
 
 export const revalidate = 60;
 
@@ -19,7 +20,7 @@ export default async function Home() {
           <div>
             <p className="eyebrow">Notes on building thoughtfully</p>
             <h1 className="mt-5 max-w-4xl text-5xl font-semibold leading-[0.98] tracking-[-0.045em] text-ink sm:text-6xl lg:text-7xl">
-              Ideas, experiments, and lessons from the workbench.
+              <RotatingHeadline />
             </h1>
           </div>
           <p className="max-w-xl text-lg leading-8 text-muted md:pb-1">
