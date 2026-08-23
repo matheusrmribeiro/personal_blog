@@ -26,6 +26,7 @@ export function PostEditor({ post }: { post?: Post }) {
   );
   const [editorKey, setEditorKey] = useState(0);
   const [isEditorBusy, setIsEditorBusy] = useState(false);
+  const [isImporting, setIsImporting] = useState(false);
   const [imageError, setImageError] = useState('');
 
   function importPost(importedPost: ImportedPost) {
@@ -53,7 +54,12 @@ export function PostEditor({ post }: { post?: Post }) {
     <form action={formAction}>
       <input name="id" type="hidden" value={post?.id ?? ''} />
 
-      {!post ? <PostImporter onImport={importPost} /> : null}
+      {!post ? (
+        <PostImporter
+          onImport={importPost}
+          onBusyChange={setIsImporting}
+        />
+      ) : null}
 
       <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_320px]">
         <div className="space-y-7">
@@ -154,7 +160,7 @@ export function PostEditor({ post }: { post?: Post }) {
                 {state.message}
               </p>
             ) : null}
-            <PublishButtons disabled={isEditorBusy} />
+            <PublishButtons disabled={isEditorBusy || isImporting} />
           </section>
 
           <section className="admin-panel space-y-5 p-6">
