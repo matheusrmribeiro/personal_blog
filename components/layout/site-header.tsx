@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { ThemeToggle } from './theme-toggle';
 
 export function SiteHeader() {
   return (
@@ -8,7 +9,7 @@ export function SiteHeader() {
           Workbench Notes<span className="text-muted">.</span>
         </Link>
         <nav aria-label="Primary navigation">
-          <ul className="flex items-center gap-6 text-sm text-muted sm:gap-8">
+          <ul className="flex items-center gap-4 text-sm text-muted sm:gap-8">
             <li>
               <Link className="transition-colors hover:text-ink" href="/posts">
                 Notes
@@ -18,6 +19,9 @@ export function SiteHeader() {
               <Link className="transition-colors hover:text-ink" href="/about">
                 About
               </Link>
+            </li>
+            <li>
+              <ThemeToggle />
             </li>
           </ul>
         </nav>

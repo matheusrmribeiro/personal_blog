@@ -78,10 +78,10 @@ export default async function Home() {
           </section>
         ) : null}
 
-        <section className="border-t border-line bg-ink text-paper">
+        <section className="border-t border-line bg-contrast text-on-contrast">
           <div className="mx-auto flex max-w-6xl flex-col gap-8 px-6 py-16 md:flex-row md:items-end md:justify-between md:px-10 md:py-20">
             <div className="max-w-2xl">
-              <p className="font-mono text-xs uppercase tracking-[0.2em] text-paper/55">
+              <p className="font-mono text-xs uppercase tracking-[0.2em] text-on-contrast/55">
                 Stay curious
               </p>
               <h2 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
@@ -90,7 +90,7 @@ export default async function Home() {
             </div>
             <a
               href="mailto:hello@example.com?subject=Blog%20updates"
-              className="inline-flex w-fit items-center gap-3 border-b border-paper/60 pb-2 text-sm font-semibold transition-colors hover:border-accent hover:text-accent"
+              className="inline-flex w-fit items-center gap-3 border-b border-on-contrast/60 pb-2 text-sm font-semibold transition-colors hover:border-accent hover:text-accent"
             >
               Join the reading list <span aria-hidden="true">&#8599;</span>
             </a>

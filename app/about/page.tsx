@@ -23,7 +23,7 @@ export default function AboutPage() {
           <ExpandableImage
             src={profileImageUrl}
             alt="Portrait of the author by a mountain lake"
-            className="mt-8 aspect-square max-w-sm rounded-2xl bg-ink"
+            className="mt-8 aspect-square max-w-sm rounded-2xl bg-contrast"
           >
             <Image
               src={profileImageUrl}

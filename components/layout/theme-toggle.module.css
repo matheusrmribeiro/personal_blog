@@ -1,0 +1,15 @@
+.moon {
+  display: block;
+}
+
+.sun {
+  display: none;
+}
+
+:global([data-theme='dark']) .moon {
+  display: none;
+}
+
+:global([data-theme='dark']) .sun {
+  display: block;
+}

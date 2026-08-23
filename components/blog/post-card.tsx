@@ -16,7 +16,7 @@ export function PostCard({ post, featured = false, index }: PostCardProps) {
   if (featured) {
     const featuredVisual = (
       <div
-        className="relative flex min-h-72 items-end bg-ink p-7 text-paper sm:min-h-96 sm:p-10"
+        className="relative flex min-h-72 items-end bg-contrast p-7 text-on-contrast sm:min-h-96 sm:p-10"
         style={
           post.cover_image_url
             ? {
@@ -30,13 +30,13 @@ export function PostCard({ post, featured = false, index }: PostCardProps) {
       >
         <span
           aria-hidden="true"
-          className="absolute inset-0 bg-linear-to-t from-ink/85 to-ink/10"
+          className="absolute inset-0 bg-linear-to-t from-contrast/85 to-contrast/10"
         />
         <div className="relative z-10">
-          <span className="font-mono text-xs uppercase tracking-[0.2em] text-paper/55">
+          <span className="font-mono text-xs uppercase tracking-[0.2em] text-on-contrast/55">
             Featured note
           </span>
-          <p className="mt-3 max-w-xs text-sm leading-6 text-paper/75">
+          <p className="mt-3 max-w-xs text-sm leading-6 text-on-contrast/75">
             {post.excerpt}
           </p>
         </div>

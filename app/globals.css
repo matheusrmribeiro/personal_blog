@@ -7,6 +7,20 @@
   --muted: #687067;
   --line: #cec6b7;
   --accent: #d7ff57;
+  --contrast: #20241f;
+  --on-contrast: #f4f0e7;
+  color-scheme: light;
+}
+
+[data-theme='dark'] {
+  --paper: #141713;
+  --surface: #20251f;
+  --ink: #eef1e8;
+  --muted: #a8b0a4;
+  --line: #41493e;
+  --contrast: #0c0f0c;
+  --on-contrast: #f4f0e7;
+  color-scheme: dark;
 }
 
 @theme inline {
@@ -16,6 +30,8 @@
   --color-muted: var(--muted);
   --color-line: var(--line);
   --color-accent: var(--accent);
+  --color-contrast: var(--contrast);
+  --color-on-contrast: var(--on-contrast);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -42,7 +58,7 @@ button:not(:disabled) {
 
 ::selection {
   background: var(--accent);
-  color: var(--ink);
+  color: var(--contrast);
 }
 
 @layer components {
@@ -140,8 +156,8 @@ button:not(:disabled) {
   .prose-blog pre {
     overflow-x: auto;
     border-radius: 0.5rem;
-    background: var(--ink);
-    color: var(--paper);
+    background: var(--contrast);
+    color: var(--on-contrast);
     padding: 1.25rem;
   }
 
