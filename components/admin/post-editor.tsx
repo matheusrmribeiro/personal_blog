@@ -3,7 +3,9 @@
 import { useActionState, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 import { savePost, type PostActionState } from '@/app/admin/actions';
+import { PostImporter } from '@/components/admin/post-importer';
 import { RichTextEditor } from '@/components/admin/rich-text-editor';
+import type { ImportedPost } from '@/lib/post-import';
 import type { Post } from '@/types/post';
 
 const initialState: PostActionState = { message: '' };
@@ -13,9 +15,31 @@ export function PostEditor({ post }: { post?: Post }) {
   const [title, setTitle] = useState(post?.title ?? '');
   const [slug, setSlug] = useState(post?.slug ?? '');
   const [slugEdited, setSlugEdited] = useState(Boolean(post));
+  const [excerpt, setExcerpt] = useState(post?.excerpt ?? '');
   const [content, setContent] = useState(post?.content ?? '');
+  const [coverImageUrl, setCoverImageUrl] = useState(
+    post?.cover_image_url ?? '',
+  );
+  const [seoTitle, setSeoTitle] = useState(post?.seo_title ?? '');
+  const [seoDescription, setSeoDescription] = useState(
+    post?.seo_description ?? '',
+  );
+  const [editorKey, setEditorKey] = useState(0);
   const [isEditorBusy, setIsEditorBusy] = useState(false);
   const [imageError, setImageError] = useState('');
+
+  function importPost(importedPost: ImportedPost) {
+    setTitle(importedPost.title);
+    setSlug(importedPost.slug ?? toSlug(importedPost.title));
+    setSlugEdited(Boolean(importedPost.slug));
+    setExcerpt(importedPost.excerpt);
+    setContent(importedPost.content);
+    setCoverImageUrl(importedPost.coverImageUrl);
+    setSeoTitle(importedPost.seoTitle);
+    setSeoDescription(importedPost.seoDescription);
+    setEditorKey((currentKey) => currentKey + 1);
+    setImageError('');
+  }
 
   function updateTitle(value: string) {
     setTitle(value);
@@ -28,6 +52,8 @@ export function PostEditor({ post }: { post?: Post }) {
   return (
     <form action={formAction}>
       <input name="id" type="hidden" value={post?.id ?? ''} />
+
+      {!post ? <PostImporter onImport={importPost} /> : null}
 
       <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_320px]">
         <div className="space-y-7">
@@ -76,7 +102,8 @@ export function PostEditor({ post }: { post?: Post }) {
                 <textarea
                   className="admin-input mt-2 min-h-24 resize-y"
                   name="excerpt"
-                  defaultValue={post?.excerpt ?? ''}
+                  value={excerpt}
+                  onChange={(event) => setExcerpt(event.target.value)}
                   maxLength={360}
                   required
                   placeholder="What will readers take away from this post?"
@@ -90,7 +117,8 @@ export function PostEditor({ post }: { post?: Post }) {
               <p className="admin-label">Post content</p>
             </div>
             <RichTextEditor
-              initialContent={post?.content ?? ''}
+              key={editorKey}
+              initialContent={content}
               onChange={setContent}
               onBusyChange={setIsEditorBusy}
               onError={setImageError}
@@ -147,7 +175,8 @@ export function PostEditor({ post }: { post?: Post }) {
                 className="admin-input mt-2"
                 name="cover_image_url"
                 type="url"
-                defaultValue={post?.cover_image_url ?? ''}
+                value={coverImageUrl}
+                onChange={(event) => setCoverImageUrl(event.target.value)}
                 placeholder="https://…"
               />
             </Field>
@@ -166,7 +195,8 @@ export function PostEditor({ post }: { post?: Post }) {
               <input
                 className="admin-input mt-2"
                 name="seo_title"
-                defaultValue={post?.seo_title ?? ''}
+                value={seoTitle}
+                onChange={(event) => setSeoTitle(event.target.value)}
                 maxLength={70}
               />
             </Field>
@@ -177,7 +207,8 @@ export function PostEditor({ post }: { post?: Post }) {
               <textarea
                 className="admin-input mt-2 min-h-24 resize-y"
                 name="seo_description"
-                defaultValue={post?.seo_description ?? ''}
+                value={seoDescription}
+                onChange={(event) => setSeoDescription(event.target.value)}
                 maxLength={170}
               />
             </Field>
