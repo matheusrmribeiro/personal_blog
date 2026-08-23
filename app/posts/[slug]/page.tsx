@@ -94,8 +94,11 @@ export default async function PostPage({ params }: PostPageProps) {
               className="mx-auto aspect-[16/8] max-w-6xl rounded-2xl bg-ink"
             >
               <div
-                className="absolute inset-0 bg-contain bg-center bg-no-repeat"
-                style={{ backgroundImage: `url("${post.cover_image_url}")` }}
+                className="absolute inset-0 bg-center bg-no-repeat"
+                style={{
+                  backgroundImage: `url("${post.cover_image_url}")`,
+                  backgroundSize: '100% 100%',
+                }}
                 role="img"
                 aria-label={`Cover image for ${post.title}`}
               />

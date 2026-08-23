@@ -23,7 +23,7 @@ export function PostCard({ post, featured = false, index }: PostCardProps) {
                 backgroundImage: `url("${post.cover_image_url}")`,
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
-                backgroundSize: 'contain',
+                backgroundSize: '100% 100%',
               }
             : undefined
         }
