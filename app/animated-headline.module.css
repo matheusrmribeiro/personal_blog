@@ -1,0 +1,32 @@
+.word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.word:not(:last-child)::after {
+  content: " ";
+  white-space: pre;
+}
+
+.letter {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.45em);
+  animation: reveal-letter 520ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: calc(120ms + var(--letter-index) * 32ms);
+}
+
+@keyframes reveal-letter {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .letter {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
