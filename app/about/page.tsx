@@ -8,6 +8,7 @@ import { getSupabaseConfig } from '@/lib/supabase/config';
 export const metadata: Metadata = {
   title: 'About',
   description: 'About the writer behind Workbench Notes.',
+  alternates: { canonical: '/about' },
 };
 
 export default function AboutPage() {

@@ -1,9 +1,14 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { PostCard } from '@/components/blog/post-card';
 import { SiteFooter } from '@/components/layout/site-footer';
 import { SiteHeader } from '@/components/layout/site-header';
 import { getPublishedPosts } from '@/lib/posts';
 import { AnimatedHeadline } from './animated-headline';
+
+export const metadata: Metadata = {
+  alternates: { canonical: '/' },
+};
 
 export const revalidate = 60;
 

@@ -7,6 +7,7 @@ import { getPublishedPosts } from '@/lib/posts';
 export const metadata: Metadata = {
   title: 'Notes',
   description: 'All published notes from Workbench Notes.',
+  alternates: { canonical: '/posts' },
 };
 
 export const revalidate = 60;

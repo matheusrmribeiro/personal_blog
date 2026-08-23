@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
+import { siteDescription, siteName, siteUrl } from '@/lib/site';
 import './globals.css';
 
 const geistSans = Geist({
@@ -13,27 +14,40 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000',
-  ),
+  metadataBase: siteUrl,
   title: {
-    default: 'Workbench Notes',
-    template: '%s | Workbench Notes',
+    default: `${siteName} — Software & Design Journal`,
+    template: `%s | ${siteName}`,
   },
-  description:
-    'A personal journal about software, design, and building thoughtful digital products.',
+  description: siteDescription,
+  applicationName: siteName,
+  authors: [{ name: 'Matt' }],
+  creator: 'Matt',
+  category: 'technology',
   openGraph: {
-    title: 'Workbench Notes',
-    description:
-      'Ideas, experiments, and lessons from the workbench.',
+    title: siteName,
+    description: siteDescription,
+    url: '/',
+    siteName,
     images: [{ url: '/og.png', width: 1200, height: 630 }],
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Workbench Notes',
-    description: 'Ideas, experiments, and lessons from the workbench.',
+    title: siteName,
+    description: siteDescription,
     images: ['/og.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
   },
 };
 

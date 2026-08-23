@@ -31,9 +31,11 @@ export async function generateMetadata({
   return {
     title: post.seo_title || post.title,
     description: post.seo_description || post.excerpt,
+    alternates: { canonical: `/posts/${post.slug}` },
     openGraph: {
       title: post.seo_title || post.title,
       description: post.seo_description || post.excerpt,
+      url: `/posts/${post.slug}`,
       type: 'article',
       publishedTime: post.published_at ?? undefined,
       images: post.cover_image_url ? [post.cover_image_url] : [],
