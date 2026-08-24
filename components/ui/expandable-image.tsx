@@ -1,7 +1,9 @@
 'use client';
 
+import { mdiClose, mdiFullscreen } from '@mdi/js';
 import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
+import { MdiIcon } from '@/components/ui/mdi-icon';
 
 type ExpandableImageProps = {
   alt: string;
@@ -68,9 +70,11 @@ export function ExpandableImage({
           type="button"
           aria-label={`Expand image: ${alt}`}
           onClick={() => setIsOpen(true)}
-          className="absolute top-3 right-3 z-20 grid size-10 place-items-center rounded-lg border border-white/30 bg-black/75 text-white opacity-100 shadow-lg transition hover:bg-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:opacity-0 sm:group-hover/expandable-image:opacity-100 sm:group-focus-within/expandable-image:opacity-100"
+          className="absolute inset-0 z-20 cursor-zoom-in rounded-[inherit] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
         >
-          <ExpandIcon />
+          <span className="absolute top-3 right-3 grid size-10 place-items-center rounded-lg border border-white/30 bg-black/75 text-white opacity-100 shadow-lg transition hover:bg-black sm:opacity-0 sm:group-hover/expandable-image:opacity-100 sm:group-focus-within/expandable-image:opacity-100">
+            <MdiIcon path={mdiFullscreen} className="size-5" />
+          </span>
         </button>
       </Wrapper>
 
@@ -98,7 +102,7 @@ export function ExpandableImage({
                 onClick={closeModal}
                 className="absolute top-5 right-5 z-10 grid size-11 place-items-center rounded-full border border-white/30 bg-black/70 text-white transition hover:bg-white hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
-                <CloseIcon />
+                <MdiIcon path={mdiClose} className="size-5" />
               </button>
               {/* eslint-disable-next-line @next/next/no-img-element -- the lightbox must display the original image at its natural resolution. */}
               <img
@@ -112,41 +116,5 @@ export function ExpandableImage({
           )
         : null}
     </>
-  );
-}
-
-function ExpandIcon() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      width="18"
-      height="18"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M8 3H3v5M16 3h5v5M8 21H3v-5M21 16v5h-5" />
-      <path d="m3 8 6-6M15 2l6 6M3 16l6 6M15 22l6-6" />
-    </svg>
-  );
-}
-
-function CloseIcon() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      width="20"
-      height="20"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      aria-hidden="true"
-    >
-      <path d="M6 6l12 12M18 6 6 18" />
-    </svg>
   );
 }

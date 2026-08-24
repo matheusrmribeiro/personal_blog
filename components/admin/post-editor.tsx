@@ -5,6 +5,7 @@ import { useFormStatus } from 'react-dom';
 import { savePost, type PostActionState } from '@/app/admin/actions';
 import { PostImporter } from '@/components/admin/post-importer';
 import { RichTextEditor } from '@/components/admin/rich-text-editor';
+import { ExpandableImage } from '@/components/ui/expandable-image';
 import type { ImportedPost } from '@/lib/post-import';
 import type { Post } from '@/types/post';
 
@@ -28,6 +29,7 @@ export function PostEditor({ post }: { post?: Post }) {
   const [isEditorBusy, setIsEditorBusy] = useState(false);
   const [isImporting, setIsImporting] = useState(false);
   const [imageError, setImageError] = useState('');
+  const coverImagePreviewUrl = getImagePreviewUrl(coverImageUrl);
 
   function importPost(importedPost: ImportedPost) {
     setTitle(importedPost.title);
@@ -186,6 +188,20 @@ export function PostEditor({ post }: { post?: Post }) {
                 placeholder="https://…"
               />
             </Field>
+            {coverImagePreviewUrl ? (
+              <ExpandableImage
+                src={coverImagePreviewUrl}
+                alt={`Cover preview for ${title || 'untitled post'}`}
+                className="aspect-video w-full rounded-lg bg-zinc-100"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element -- authors can preview arbitrary remote image URLs before saving. */}
+                <img
+                  src={coverImagePreviewUrl}
+                  alt={`Cover preview for ${title || 'untitled post'}`}
+                  className="size-full object-cover"
+                />
+              </ExpandableImage>
+            ) : null}
           </section>
 
           <section className="admin-panel space-y-5 p-6">
@@ -281,4 +297,16 @@ function toSlug(value: string) {
     .replace(/[\u0300-\u036f]/g, '')
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
+}
+
+function getImagePreviewUrl(value: string) {
+  try {
+    const url = new URL(value);
+
+    return url.protocol === 'http:' || url.protocol === 'https:'
+      ? url.toString()
+      : null;
+  } catch {
+    return null;
+  }
 }
