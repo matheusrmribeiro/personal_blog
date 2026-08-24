@@ -62,7 +62,7 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html:
-              '(function(){try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}})()',
+              '(function(){try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}try{var k="workbench-notes:archive-view";var s=function(){var v=localStorage.getItem(k);document.documentElement.setAttribute("data-archive-view",v==="list"?"list":"cards")};s();window.addEventListener("storage",function(e){if(e.key===k||e.key===null)s()})}catch(e){document.documentElement.setAttribute("data-archive-view","cards")}})()',
           }}
         />
       </head>

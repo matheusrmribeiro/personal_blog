@@ -37,6 +37,10 @@ function getServerArchiveView(): ArchiveView {
 function subscribeToArchiveView(onStoreChange: () => void) {
   const handleStorage = (event: StorageEvent) => {
     if (event.key === archiveViewStorageKey || event.key === null) {
+      document.documentElement.setAttribute(
+        'data-archive-view',
+        getArchiveView(),
+      );
       onStoreChange();
     }
   };
@@ -52,6 +56,7 @@ function subscribeToArchiveView(onStoreChange: () => void) {
 
 function saveArchiveView(view: ArchiveView) {
   fallbackView = view;
+  document.documentElement.setAttribute('data-archive-view', view);
 
   try {
     window.localStorage.setItem(archiveViewStorageKey, view);
@@ -92,6 +97,7 @@ export function ArchiveViewToggle({
                 key={option.value}
                 aria-label={`${option.label} view`}
                 aria-pressed={isActive}
+                data-archive-view-option={option.value}
                 className={`inline-flex items-center gap-2 px-3 py-2 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink ${
                   isActive
                     ? 'bg-contrast text-on-contrast'
@@ -108,7 +114,8 @@ export function ArchiveViewToggle({
         </div>
       </div>
 
-      {view === 'cards' ? cards : list}
+      <div data-archive-view-panel="cards">{cards}</div>
+      <div data-archive-view-panel="list">{list}</div>
     </div>
   );
 }

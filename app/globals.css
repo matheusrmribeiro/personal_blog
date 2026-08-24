@@ -56,6 +56,30 @@ button:not(:disabled) {
   cursor: pointer;
 }
 
+[data-archive-view-panel='list'] {
+  display: none;
+}
+
+html[data-archive-view='list'] [data-archive-view-panel='cards'] {
+  display: none;
+}
+
+html[data-archive-view='list'] [data-archive-view-panel='list'] {
+  display: block;
+}
+
+html[data-archive-view='cards'] [data-archive-view-option='cards'],
+html[data-archive-view='list'] [data-archive-view-option='list'] {
+  background-color: var(--contrast);
+  color: var(--on-contrast);
+}
+
+html[data-archive-view='cards'] [data-archive-view-option='list'],
+html[data-archive-view='list'] [data-archive-view-option='cards'] {
+  background-color: transparent;
+  color: var(--muted);
+}
+
 ::selection {
   background: var(--accent);
   color: var(--contrast);
