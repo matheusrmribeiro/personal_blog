@@ -5,7 +5,7 @@ A public personal blog and private publishing studio built with Next.js, TypeScr
 ## What is included
 
 - Public homepage, notes archive, individual Markdown post pages, and about page
-- Passwordless admin sign-in through Supabase Auth
+- Admin sign-in with a password or secure email link through Supabase Auth
 - Admin dashboard with post counts and a complete post library
 - Markdown editor with live preview, drafts, publishing, SEO fields, and cover-image uploads
 - Supabase Postgres schema, generated TypeScript types, Row Level Security, and Storage policies

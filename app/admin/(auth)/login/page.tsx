@@ -34,8 +34,8 @@ export default async function AdminLoginPage({
             Welcome back.
           </h1>
           <p className="mt-4 max-w-sm leading-7 text-zinc-400">
-            Sign in with your approved administrator email to write, preview,
-            and publish posts.
+            Sign in with your approved administrator account to write,
+            preview, and publish posts.
           </p>
           {error ? (
             <p className="mt-5 rounded-lg border border-red-900 bg-red-950/60 px-4 py-3 text-sm text-red-200">
