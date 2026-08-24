@@ -6,11 +6,8 @@ import { PostViewTracker } from '@/components/blog/post-view-tracker';
 import { SiteFooter } from '@/components/layout/site-footer';
 import { SiteHeader } from '@/components/layout/site-header';
 import { ExpandableImage } from '@/components/ui/expandable-image';
-import {
-  estimateReadingTime,
-  formatPostDate,
-  getPublishedPostBySlug,
-} from '@/lib/posts';
+import { estimateReadingTime, formatPostDate } from '@/lib/post-metadata';
+import { getPublishedPostBySlug } from '@/lib/posts';
 
 type PostPageProps = {
   params: Promise<{ slug: string }>;

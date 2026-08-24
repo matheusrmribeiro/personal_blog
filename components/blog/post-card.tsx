@@ -1,9 +1,6 @@
 import Link from 'next/link';
-import {
-  estimateReadingTime,
-  formatPostDate,
-} from '@/lib/posts';
 import { ExpandableImage } from '@/components/ui/expandable-image';
+import { estimateReadingTime, formatPostDate } from '@/lib/post-metadata';
 import type { PostSummary } from '@/types/post';
 
 type PostCardProps = {

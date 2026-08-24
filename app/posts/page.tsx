@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { PostCard } from '@/components/blog/post-card';
+import { PostArchive } from '@/components/blog/post-archive';
 import { SiteFooter } from '@/components/layout/site-footer';
 import { SiteHeader } from '@/components/layout/site-header';
 import { getPublishedPosts } from '@/lib/posts';
@@ -31,11 +31,7 @@ export default async function PostsPage() {
         </div>
 
         {posts.length ? (
-          <div className="mt-14 grid gap-6 md:grid-cols-2">
-            {posts.map((post, index) => (
-              <PostCard key={post.id} post={post} index={index + 1} />
-            ))}
-          </div>
+          <PostArchive posts={posts} />
         ) : (
           <div className="mt-14 border border-dashed border-line px-8 py-16 text-center text-muted">
             No published posts yet. Check back soon.
