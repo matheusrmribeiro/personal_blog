@@ -1,8 +1,10 @@
+import { mdiOpenInNew } from '@mdi/js';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { DeletePostButton } from '@/components/admin/delete-post-button';
 import { PostEditor } from '@/components/admin/post-editor';
 import { StatusPill } from '@/components/admin/status-pill';
+import { MdiIcon } from '@/components/ui/mdi-icon';
 import { getAdminPostById } from '@/lib/posts';
 
 export const dynamic = 'force-dynamic';
@@ -40,11 +42,14 @@ export default async function EditPostPage({
         <div className="flex items-center gap-5">
           {post.status === 'published' ? (
             <Link
-              className="text-sm font-semibold hover:underline"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold hover:underline"
               href={`/posts/${post.slug}`}
               target="_blank"
+              rel="noreferrer"
             >
-              View post &#8599;
+              View post
+              <MdiIcon path={mdiOpenInNew} className="size-4" />
+              <span className="sr-only"> (opens in a new tab)</span>
             </Link>
           ) : null}
           <DeletePostButton id={post.id} />

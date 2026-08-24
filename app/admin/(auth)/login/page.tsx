@@ -1,7 +1,9 @@
+import { mdiArrowLeft } from '@mdi/js';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { LoginForm } from '@/components/admin/login-form';
+import { MdiIcon } from '@/components/ui/mdi-icon';
 import { getAdminSession } from '@/lib/auth/admin';
 
 export const metadata: Metadata = { title: 'Admin sign in' };
@@ -24,8 +26,12 @@ export default async function AdminLoginPage({
     <main className="grid min-h-screen bg-zinc-950 px-6 py-12 text-zinc-100 lg:grid-cols-2 lg:items-stretch lg:p-4">
       <section className="flex items-center justify-center py-12">
         <div className="w-full max-w-md">
-          <Link href="/" className="text-sm font-semibold text-zinc-400 hover:text-white">
-            &#8592; Back to the blog
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-zinc-400 hover:text-white"
+          >
+            <MdiIcon path={mdiArrowLeft} className="size-4" />
+            Back to the blog
           </Link>
           <p className="mt-16 font-mono text-xs uppercase tracking-[0.18em] text-lime-300">
             Workbench Notes Studio

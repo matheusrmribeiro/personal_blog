@@ -1,5 +1,6 @@
 'use client';
 
+import { mdiDelete } from '@mdi/js';
 import CodeBlock from '@tiptap/extension-code-block';
 import Image from '@tiptap/extension-image';
 import Placeholder from '@tiptap/extension-placeholder';
@@ -20,6 +21,7 @@ import {
   deletePostContentImage,
   uploadPostContentImage,
 } from '@/app/admin/actions';
+import { MdiIcon } from '@/components/ui/mdi-icon';
 
 type ImageSize = 'small' | 'medium' | 'large';
 type CodeLanguage = 'javascript' | 'typescript' | null;
@@ -463,32 +465,11 @@ function EditorImageNodeView({
           {isDeleting ? (
             <span className="text-[10px] font-semibold">…</span>
           ) : (
-            <TrashIcon />
+            <MdiIcon path={mdiDelete} className="size-4" />
           )}
         </button>
       </div>
     </NodeViewWrapper>
-  );
-}
-
-function TrashIcon() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      width="16"
-      height="16"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M3 6h18" />
-      <path d="M8 6V4h8v2" />
-      <path d="m19 6-1 14H6L5 6" />
-      <path d="M10 11v5M14 11v5" />
-    </svg>
   );
 }
 
