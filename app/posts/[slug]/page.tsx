@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { MarkdownContent } from '@/components/blog/markdown-content';
-import { PostViewCounter } from '@/components/blog/post-view-counter';
+import { PostViewTracker } from '@/components/blog/post-view-tracker';
 import { SiteFooter } from '@/components/layout/site-footer';
 import { SiteHeader } from '@/components/layout/site-header';
 import { ExpandableImage } from '@/components/ui/expandable-image';
@@ -59,6 +59,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
   return (
     <div className="min-h-screen">
+      <PostViewTracker slug={post.slug} />
       <SiteHeader />
       <main>
         <article>
@@ -81,11 +82,6 @@ export default async function PostPage({ params }: PostPageProps) {
               </time>
               <span aria-hidden="true">/</span>
               <span>{estimateReadingTime(post.content)}</span>
-              <span aria-hidden="true">/</span>
-              <PostViewCounter
-                initialCount={post.view_count}
-                slug={post.slug}
-              />
             </div>
           </header>
 

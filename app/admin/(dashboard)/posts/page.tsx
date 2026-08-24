@@ -26,11 +26,12 @@ export default async function AdminPostsPage() {
       <section className="admin-panel mt-8 overflow-hidden">
         {posts.length ? (
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[680px] text-left text-sm">
+            <table className="w-full min-w-[760px] text-left text-sm">
               <thead className="border-b border-zinc-200 bg-zinc-50 text-xs uppercase tracking-[0.12em] text-zinc-500">
                 <tr>
                   <th className="px-6 py-4 font-semibold">Title</th>
                   <th className="px-6 py-4 font-semibold">Status</th>
+                  <th className="px-6 py-4 text-right font-semibold">Views</th>
                   <th className="px-6 py-4 font-semibold">Updated</th>
                   <th className="px-6 py-4 text-right font-semibold">Action</th>
                 </tr>
@@ -46,6 +47,9 @@ export default async function AdminPostsPage() {
                     </td>
                     <td className="px-6 py-5">
                       <StatusPill status={post.status} />
+                    </td>
+                    <td className="px-6 py-5 text-right font-mono tabular-nums text-zinc-500">
+                      {new Intl.NumberFormat('en').format(post.view_count)}
                     </td>
                     <td className="px-6 py-5 text-zinc-500">
                       {new Intl.DateTimeFormat('en', {
