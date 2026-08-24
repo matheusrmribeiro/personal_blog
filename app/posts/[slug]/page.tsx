@@ -89,7 +89,7 @@ export default async function PostPage({ params }: PostPageProps) {
             <ExpandableImage
               src={post.cover_image_url}
               alt={`Cover image for ${post.title}`}
-              className="mx-auto aspect-[16/8] max-w-6xl rounded-2xl bg-contrast"
+              className="mx-auto aspect-16/8 max-w-6xl rounded-2xl bg-contrast"
             >
               <div
                 className="absolute inset-0 bg-center bg-no-repeat"
