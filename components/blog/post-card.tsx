@@ -68,7 +68,7 @@ export function PostCard({ post, featured = false, index }: PostCardProps) {
   }
 
   return (
-    <article className="group flex min-h-80 flex-col justify-between border border-line p-7 transition-colors hover:bg-surface sm:p-8">
+    <article className="group flex min-h-80 flex-col border border-line p-7 transition-colors hover:bg-surface sm:p-8">
       <div className="flex items-start justify-between gap-6">
         <PostMeta post={post} />
         {index ? (
@@ -77,11 +77,13 @@ export function PostCard({ post, featured = false, index }: PostCardProps) {
           </span>
         ) : null}
       </div>
-      <div className="mt-16">
+      <div className="mt-12">
         <h3 className="text-2xl font-semibold leading-tight tracking-tight sm:text-3xl">
           {post.title}
         </h3>
         <p className="mt-4 leading-7 text-muted">{post.excerpt}</p>
+      </div>
+      <div className="mt-auto">
         <ReadLink slug={post.slug} />
       </div>
     </article>
