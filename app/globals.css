@@ -56,16 +56,9 @@ button:not(:disabled) {
   cursor: pointer;
 }
 
-[data-archive-view-panel='list'] {
-  display: none;
-}
-
-html[data-archive-view='list'] [data-archive-view-panel='cards'] {
-  display: none;
-}
-
-html[data-archive-view='list'] [data-archive-view-panel='list'] {
-  display: block;
+html[data-archive-view='list'] [data-archive-view-rendered='cards'],
+html[data-archive-view='cards'] [data-archive-view-rendered='list'] {
+  visibility: hidden;
 }
 
 html[data-archive-view='cards'] [data-archive-view-option='cards'],

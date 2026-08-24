@@ -114,8 +114,11 @@ export function ArchiveViewToggle({
         </div>
       </div>
 
-      <div data-archive-view-panel="cards">{cards}</div>
-      <div data-archive-view-panel="list">{list}</div>
+      {view === 'cards' ? (
+        <div data-archive-view-rendered="cards">{cards}</div>
+      ) : (
+        <div data-archive-view-rendered="list">{list}</div>
+      )}
     </div>
   );
 }
