@@ -1,10 +1,14 @@
 'use client';
 
 import { mdiViewGridOutline, mdiViewListOutline } from '@mdi/js';
-import { useState, type ReactNode } from 'react';
+import { useSyncExternalStore, type ReactNode } from 'react';
 import { MdiIcon } from '@/components/ui/mdi-icon';
 
 type ArchiveView = 'cards' | 'list';
+
+const archiveViewStorageKey = 'workbench-notes:archive-view';
+const archiveViewChangeEvent = 'workbench-notes:archive-view-change';
+let fallbackView: ArchiveView = 'cards';
 
 type ArchiveViewToggleProps = {
   cards: ReactNode;
@@ -17,12 +21,57 @@ const viewOptions = [
   { label: 'List', value: 'list', icon: mdiViewListOutline },
 ] as const;
 
+function getArchiveView(): ArchiveView {
+  try {
+    const storedView = window.localStorage.getItem(archiveViewStorageKey);
+    return storedView === 'list' ? 'list' : 'cards';
+  } catch {
+    return fallbackView;
+  }
+}
+
+function getServerArchiveView(): ArchiveView {
+  return 'cards';
+}
+
+function subscribeToArchiveView(onStoreChange: () => void) {
+  const handleStorage = (event: StorageEvent) => {
+    if (event.key === archiveViewStorageKey || event.key === null) {
+      onStoreChange();
+    }
+  };
+
+  window.addEventListener('storage', handleStorage);
+  window.addEventListener(archiveViewChangeEvent, onStoreChange);
+
+  return () => {
+    window.removeEventListener('storage', handleStorage);
+    window.removeEventListener(archiveViewChangeEvent, onStoreChange);
+  };
+}
+
+function saveArchiveView(view: ArchiveView) {
+  fallbackView = view;
+
+  try {
+    window.localStorage.setItem(archiveViewStorageKey, view);
+  } catch {
+    // The in-memory fallback still keeps the toggle functional.
+  }
+
+  window.dispatchEvent(new Event(archiveViewChangeEvent));
+}
+
 export function ArchiveViewToggle({
   cards,
   count,
   list,
 }: ArchiveViewToggleProps) {
-  const [view, setView] = useState<ArchiveView>('cards');
+  const view = useSyncExternalStore(
+    subscribeToArchiveView,
+    getArchiveView,
+    getServerArchiveView,
+  );
 
   return (
     <div className="mt-14">
@@ -48,7 +97,7 @@ export function ArchiveViewToggle({
                     ? 'bg-contrast text-on-contrast'
                     : 'text-muted hover:bg-surface hover:text-ink'
                 }`}
-                onClick={() => setView(option.value)}
+                onClick={() => saveArchiveView(option.value)}
                 type="button"
               >
                 <MdiIcon path={option.icon} className="size-4" />
